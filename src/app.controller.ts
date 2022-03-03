@@ -1,5 +1,14 @@
-import { Controller, Delete, Get, Post, Put, Param } from '@nestjs/common';
+import {
+  Controller,
+  Delete,
+  Get,
+  Post,
+  Put,
+  Param,
+  Body,
+} from '@nestjs/common';
 import { data, ReportType } from './data';
+import { v4 as uuid } from 'uuid';
 
 @Controller('/report/:type')
 export class AppController {
@@ -21,17 +30,21 @@ export class AppController {
   }
 
   @Post()
-  createReport() {
-    return 'Created';
-  }
+  createReport(
+    @Body() { amount, source }: { amount: number; source: string },
+    @Param('type') type: string,
+  ) {
+    const newReport = {
+      id: uuid(),
+      source,
+      amount,
+      created_at: new Date(),
+      updated_at: new Date(),
+      type: type === 'income' ? ReportType.INCOME : ReportType.EXPENSE,
+    };
 
-  @Put('/:id')
-  updateReport() {
-    return 'Updated';
-  }
+    data.report.push(newReport);
 
-  @Delete('/:id')
-  deleteReport() {
-    return 'Deleted';
+    return newReport;
   }
 }
