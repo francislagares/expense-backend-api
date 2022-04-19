@@ -1,6 +1,15 @@
 # compiled output
 /dist
 /node_modules
+/.pnp
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+.pnp.js
 
 # Logs
 logs
