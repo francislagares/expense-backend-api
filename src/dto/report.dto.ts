@@ -5,6 +5,8 @@ import {
   IsPositive,
   IsString,
 } from 'class-validator';
+import { Exclude } from 'class-transformer';
+import { ReportType } from 'src/data';
 
 export class CreateReportDto {
   @IsNumber()
@@ -26,4 +28,19 @@ export class UpdateReportDto {
   @IsString()
   @IsNotEmpty()
   source: string;
+}
+
+export class ResponseReportDto {
+  id: string;
+  source: string;
+  amount: number;
+  created_at: Date;
+
+  @Exclude()
+  updated_at: Date;
+  type: ReportType;
+
+  constructor(partial: Partial<ResponseReportDto>) {
+    Object.assign(this, partial);
+  }
 }
